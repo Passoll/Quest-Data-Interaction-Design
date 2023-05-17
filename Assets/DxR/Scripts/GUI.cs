@@ -100,6 +100,7 @@ namespace DxR
             Button rotateZBtn = gameObject.transform.Find("RotateZButton").GetComponent<Button>();
             rotateZBtn.onClick.AddListener(RotateZCallback);
         }
+        
 
         public void RotateXCallback()
         {

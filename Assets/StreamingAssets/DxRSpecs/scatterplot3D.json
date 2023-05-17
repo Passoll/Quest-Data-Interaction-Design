@@ -2,35 +2,44 @@
   "data" : {
     "url" : "cars.json"
   },
-  "mark" : "sphere",
+  "mark" : "mybox",
   "encoding" : {
-    "x": {
-      "field": "Horsepower",
-      "type": "quantitative",
-      "scale": {
-        "domain": [ 0, 250 ]
+    "x" : {
+      "field" : "Horsepower",
+      "type" : "quantitative",
+      "scale" : {
+        "domain" : [
+          0,
+          250
+        ]
       }
     },
-    "y": {
-      "field": "Miles_per_Gallon",
-      "type": "quantitative",
-      "scale": {
-        "domain": [ 0, 50 ]
+    "y" : {
+      "field" : "Miles_per_Gallon",
+      "type" : "quantitative",
+      "scale" : {
+        "domain" : [
+          0,
+          50
+        ]
       },
-      "axis": {
-        "title": "Miles per Gallon"
+      "axis" : {
+        "title" : "Miles per Gallon"
       }
     },
-    "z": {
-      "field": "Displacement",
-      "type": "quantitative"
+    "z" : {
+      "field" : "Displacement",
+      "type" : "quantitative"
     },
-    "color": {
-      "field": "Origin",
-      "type": "nominal"
+    "color" : {
+      "field" : "Origin",
+      "type" : "nominal"
     },
-    "size": {
-      "value": 30
+    "size" : {
+      "value" : 60
     }
-  }
+  },
+  "width" : 500,
+  "height" : 500,
+  "depth" : 500
 }

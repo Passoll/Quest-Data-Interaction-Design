@@ -49,8 +49,11 @@ public class EyetrackingRay : MonoBehaviour
             _lineRenderer.startColor = rayColorHoverState;
             _lineRenderer.endColor = rayColorHoverState;
             EyeInteractable eyeInteractable = hit.transform.GetComponent<EyeInteractable>();
-            eyeInteractable.IsHovered = true;
-            _eyeInteractables.Add(eyeInteractable);
+            if (eyeInteractable)
+            {
+                eyeInteractable.IsHovered = true;
+                _eyeInteractables.Add(eyeInteractable);
+            }
         }
         else
         {

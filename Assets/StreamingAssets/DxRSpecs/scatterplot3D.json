@@ -1,6 +1,6 @@
 {
   "data" : {
-    "url" : "cars.json"
+    "url" : "cars_reduce.json"
   },
   "mark" : "mybox",
   "encoding" : {

@@ -898,9 +898,11 @@ public class OVRManager : MonoBehaviour, OVRMixedRealityCaptureConfiguration
     /// Specify if Insight Passthrough should be enabled.
     /// Passthrough layers can only be used if passthrough is enabled.
     /// </summary>
-    [HideInInspector, Tooltip("Specify if Insight Passthrough should be enabled. Passthrough layers can only be used if passthrough is enabled.")]
+    [HideInInspector,
+     Tooltip(
+         "Specify if Insight Passthrough should be enabled. Passthrough layers can only be used if passthrough is enabled.")]
     public bool isInsightPassthroughEnabled = false;
-
+ 
 
     #region Permissions
     /// <summary>`

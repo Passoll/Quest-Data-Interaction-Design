@@ -4,6 +4,7 @@ using UnityEngine;
 using SimpleJSON;
 using System;
 using System.IO;
+using UnityEngine.Networking;
 
 namespace DxR
 {
@@ -19,6 +20,7 @@ namespace DxR
         /// </summary>
         public void Parse(string specsFilename, out JSONNode visSpecs)
         {
+            
             visSpecs = JSON.Parse(GetStringFromFile(GetFullSpecsPath(specsFilename)));
 
             // If the specs file is empty, provide the boiler plate data and marks specs.
@@ -83,19 +85,51 @@ namespace DxR
             }
         }
 
-        public static string GetStringFromFile(string filename)
+        public string GetStringFromFile(string filename)
         {
-            return File.ReadAllText(filename);
+            Debug.Log("This is the file " + filename);
+            string jsonString;
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                // WWW reader = new WWW(filename);
+                // while (!reader.isDone) { }
+                //
+                // jsonString = reader.text;
+                //
+                UnityWebRequest www = UnityWebRequest.Get(filename);
+                www.SendWebRequest();
+                while (!www.isDone){}
+                jsonString = www.downloadHandler.text;
+            }
+            else
+            {
+                jsonString = File.ReadAllText(filename);
+            }
+            
+
+            Debug.Log(jsonString);
+
+            
+            return jsonString;
         }
+        
 
         public static string GetFullSpecsPath(string filename)
         {
-            return Application.streamingAssetsPath + specsBaseDir + filename;
+            if (Application.platform == RuntimePlatform.Android)
+             return "jar:file://" + Application.dataPath + "!assets" + specsBaseDir + filename;
+            else
+                return Application.streamingAssetsPath + specsBaseDir + filename;
+            //return Path.Combine(Application.streamingAssetsPath, specsBaseDir + filename);
         }
 
         public static string GetFullDataPath(string filename)
         {
-            return Application.streamingAssetsPath + dataBaseDir + filename;
+            if (Application.platform == RuntimePlatform.Android)
+                return "jar:file://" + Application.dataPath + "!assets" + dataBaseDir + filename;
+            else
+                return Application.streamingAssetsPath + dataBaseDir + filename;
+            // return Path.Combine(Application.streamingAssetsPath, dataBaseDir + filename);
         }
 
         internal List<string> GetDataFieldsList(string dataURL)

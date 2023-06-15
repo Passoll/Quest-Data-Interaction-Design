@@ -66,6 +66,9 @@ namespace DxR
 
         private void Awake()
         {
+            //steamingAssets settings
+            BetterStreamingAssets.Initialize();
+            
             // Initialize objects:
             parentObject = gameObject;
             viewParentObject = gameObject.transform.Find("DxRView").gameObject;
@@ -471,7 +474,8 @@ namespace DxR
             System.IO.File.WriteAllText(Parser.GetFullSpecsPath(visSpecsURL), visSpecsToWrite.ToString(2));
 #else
 
-                    UnityEngine.Windows.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
+                    //UnityEngine.Windows.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
+                    System.IO.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
                         System.Text.Encoding.UTF8.GetBytes(visSpecsToWrite.ToString(2)));
 #endif
 
@@ -850,7 +854,9 @@ namespace DxR
 
         private void InitDataList()
         {
-            string[] dirs = Directory.GetFiles(Application.dataPath + "/StreamingAssets/DxRData");
+            //string[] dirs = Directory.GetFiles(Application.dataPath + "/StreamingAssets/DxRData");
+            string[] dirs =  BetterStreamingAssets.GetFiles( "/DxRData");
+
             dataList = new List<string>();
             dataList.Add(DxR.Vis.UNDEFINED);
             dataList.Add("inline");
@@ -947,10 +953,11 @@ namespace DxR
             }
 
 #if UNITY_EDITOR
-            System.IO.File.WriteAllText(Parser.GetFullSpecsPath(visSpecsURL), visSpecsToWrite.ToString(2));
+            System.IO.File.WriteAllText(Parser.GetFullSpecsPath(visSpecsURL), visSpecsToWrite.ToString(2)); 
 #else
 
-            UnityEngine.Windows.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
+            //UnityEngine.Windows.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
+            System.IO.File.WriteAllBytes(Parser.GetFullSpecsPath(visSpecsURL),
                 System.Text.Encoding.UTF8.GetBytes(visSpecsToWrite.ToString(2)));
 #endif
         }

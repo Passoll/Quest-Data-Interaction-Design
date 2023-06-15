@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MyHandIter.unity
+    guid: bf0594b33e8a9d1469a6a42046ee3f4f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 5c3c14a3d2dd30046a0b6f1dbe162b73, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3a047396414a5bf49b239c5da6038c6e, type: 2}

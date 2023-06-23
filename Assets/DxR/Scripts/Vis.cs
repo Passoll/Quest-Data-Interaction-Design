@@ -4,6 +4,7 @@ using UnityEngine;
 using SimpleJSON;
 using System.IO;
 using System;
+using Dreamteck.Splines;
 
 namespace DxR
 {
@@ -62,6 +63,7 @@ namespace DxR
 
         private int frameCount = 0;
         public int FrameCount { get { return frameCount; } set { frameCount = value; } }
+        public Material linemat;
 
 
         private void Awake()
@@ -96,7 +98,33 @@ namespace DxR
             // Update vis based on the vis specs.
             UpdateVis();
             isReady = true;
+            
+            SplinePoint[] points = new SplinePoint[markInstances.Count];
+            for(int i = 0; i < markInstances.Count; i++)
+            {
+                points[i] = new SplinePoint();
+                points[i].position = markInstances[i].transform.position;
+                points[i].normal = Vector3.up;
+                points[i].size = 1f;
+                points[i].color = Color.blue;
+            }
+            Createline(points);
+           
         }
+        
+        private void Createline(SplinePoint[] points)
+        {
+            //TOD 1 : build the multiple line according to the classes (Need Data Sample!!!)
+            //TOD 2 : Sychronize the transformation of the mesh
+            SplineComputer spline = gameObject.AddComponent<SplineComputer>();
+            SplineRenderer splineRender = gameObject.AddComponent<SplineRenderer>();
+            spline.SetPoints(points);
+            splineRender.spline = spline;
+            splineRender.size = 0.04f;
+            var obj = gameObject.GetComponent<MeshRenderer>();
+            obj.material = linemat;
+        }
+
 
         private void Update()
         {
@@ -310,10 +338,12 @@ namespace DxR
                 }
             }
         }
-
+        
+    
         private void ApplyChannelEncoding(ChannelEncoding channelEncoding,
             ref List<GameObject> markInstances)
         {
+
             for(int i = 0; i < markInstances.Count; i++)
             {
                 Mark markComponent = markInstances[i].GetComponent<Mark>();
@@ -331,8 +361,19 @@ namespace DxR
                     string channelValue = channelEncoding.scale.ApplyScale(markComponent.datum[channelEncoding.field]);
                     markComponent.SetChannelValue(channelEncoding.channel, channelValue);
                 }
+                
+                // points[i] = new SplinePoint();
+                // points[i].position = markComponent.GetPos();
+                // points[i].normal = Vector3.up;
+                // points[i].size = 1f;
+                // points[i].color = Color.blue;
+
             }
+            
+            // Createline(points);
         }
+
+     
 
         private void ConstructMarkInstances()
         {

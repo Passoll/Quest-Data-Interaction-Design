@@ -20,6 +20,7 @@ namespace DxR
 
         public Vector3 forwardDirection = Vector3.up;
         Vector3 curDirection;
+        private Vector3 curPos;
 
         public Mark()
         {
@@ -36,18 +37,23 @@ namespace DxR
             return new List<string> { "x", "y", "z", "color", "size", "width", "height", "depth", "opacity", "xrotation", "yrotation", "zrotation", "length", "xdirection", "ydirection", "zdirection" };
         }
 
+        public Vector3 GetPos()
+        {
+            return curPos;
+        }
+
         public virtual void SetChannelValue(string channel, string value)
         {
             switch(channel)
             {
                 case "x":
-                    SetLocalPos(value, 0);
+                    curPos = SetLocalPos(value, 0);
                     break;
                 case "y":
-                    SetLocalPos(value, 1);
+                    curPos = SetLocalPos(value, 1);
                     break;
                 case "z":
-                    SetLocalPos(value, 2);
+                    curPos = SetLocalPos(value, 2);
                     break;
                  case "width":
                     SetSize(value, 0);
@@ -979,7 +985,7 @@ namespace DxR
             //tooltipDataField = dataField;
         }
 
-        private void SetLocalPos(string value, int dim)
+        private Vector3 SetLocalPos(string value, int dim)
         {
             // TODO: Do this more robustly.
             float pos = float.Parse(value) * DxR.Vis.SIZE_UNIT_SCALE_FACTOR;
@@ -987,6 +993,8 @@ namespace DxR
             Vector3 localPos = gameObject.transform.localPosition;
             localPos[dim] = pos;
             gameObject.transform.localPosition = localPos;
+            // add the local pos return
+            return localPos;
         }
 
         private void SetSize(string value, int dim)

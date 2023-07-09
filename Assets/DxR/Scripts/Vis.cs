@@ -4,7 +4,11 @@ using UnityEngine;
 using SimpleJSON;
 using System.IO;
 using System;
+using System.Linq;
 using Dreamteck.Splines;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
+using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 
 namespace DxR
 {
@@ -44,11 +48,13 @@ namespace DxR
         string data_name=null;
 
         public List<GameObject> markInstances;                                 // List of mark instances; each mark instance corresponds to a datum.
+        public List<GameObject> lineInstances;                                 // List of mark instances; each mark instance corresponds to a datum.
 
         private GameObject parentObject = null;                         // Parent game object for all generated objects associated to vis.
 
         private GameObject viewParentObject = null;                     // Parent game object for all view related objects - axis, legend, marks.
         private GameObject marksParentObject = null;                    // Parent game object for all mark instances.
+        private GameObject linesParentObject = null;                    // Parent game object for all line instances.
 
         private GameObject guidesParentObject = null;                   // Parent game object for all guies (axes/legends) instances.
         private GameObject interactionsParentObject = null;             // Parent game object for all interactions, e.g., filters.
@@ -63,8 +69,14 @@ namespace DxR
 
         private int frameCount = 0;
         public int FrameCount { get { return frameCount; } set { frameCount = value; } }
-        public Material linemat;
+        
 
+        [Header("3DLineProperty")]
+        [SerializeField]
+        private bool Renderline = false;
+        [SerializeField]
+        private Material linemat;
+        private Dictionary<int, List<int>> LineindexDic = new Dictionary<int, List<int>>();
 
         private void Awake()
         {
@@ -75,6 +87,7 @@ namespace DxR
             parentObject = gameObject;
             viewParentObject = gameObject.transform.Find("DxRView").gameObject;
             marksParentObject = viewParentObject.transform.Find("DxRMarks").gameObject;
+            linesParentObject = viewParentObject.transform.Find("DxRLines").gameObject;
             guidesParentObject = viewParentObject.transform.Find("DxRGuides").gameObject;
             interactionsParentObject = gameObject.transform.Find("DxRInteractions").gameObject;
 
@@ -99,32 +112,59 @@ namespace DxR
             UpdateVis();
             isReady = true;
             
-            SplinePoint[] points = new SplinePoint[markInstances.Count];
-            for(int i = 0; i < markInstances.Count; i++)
+            // Spine creation
+            InitializeLine();
+            
+        }
+
+        private void InitializeLine()
+        {
+            lineInstances = new List<GameObject>();
+            if (Renderline)
             {
-                points[i] = new SplinePoint();
-                points[i].position = markInstances[i].transform.position;
-                points[i].normal = Vector3.up;
-                points[i].size = 1f;
-                points[i].color = Color.blue;
+                if (LineindexDic.Count == 0) Debug.LogError("No -type_mark- column to generate line");
+                else
+                {
+                    
+                    foreach (KeyValuePair<int, List<int>> pair in LineindexDic)
+                    {
+                        
+                        GameObject LineGameObject = new GameObject("Line");
+                        GameObject subobj = Instantiate(LineGameObject, linesParentObject.transform.position,linesParentObject.transform.rotation, linesParentObject.transform);
+                        
+                        SplinePoint[] points = new SplinePoint[pair.Value.Count];
+                        for (int i = 0; i < pair.Value.Count; i++)
+                        {
+                            points[i] = new SplinePoint();
+                            //get the value in the list
+                            points[i].position = markInstances[pair.Value[i]].transform.position;
+                            points[i].normal = Vector3.up;
+                            points[i].size = 0.8f;
+                            points[i].color = Color.blue;
+                        }
+                        
+                        Createline(points, subobj);
+                        lineInstances.Add(subobj);
+                    }
+                }
             }
-            Createline(points);
-           
         }
         
-        private void Createline(SplinePoint[] points)
+        private void Createline(SplinePoint[] points, GameObject parentobj)
         {
-            //TOD 1 : build the multiple line according to the classes (Need Data Sample!!!)
-            //TOD 2 : Sychronize the transformation of the mesh
-            SplineComputer spline = gameObject.AddComponent<SplineComputer>();
-            SplineRenderer splineRender = gameObject.AddComponent<SplineRenderer>();
+            
+            SplineComputer spline = parentobj.AddComponent<SplineComputer>();
+            SplineRenderer splineRender = parentobj.AddComponent<SplineRenderer>();
             spline.SetPoints(points);
             splineRender.spline = spline;
             splineRender.size = 0.04f;
-            var obj = gameObject.GetComponent<MeshRenderer>();
-            obj.material = linemat;
+            var obj = parentobj.GetComponent<MeshRenderer>();
+            
+            Material newMaterial = Instantiate(linemat);
+            obj.material = newMaterial;
+            newMaterial.color = Random.ColorHSV(0.5f, 0.75f, 0.3f, 0.6f, 0.3f, 0.6f);;
         }
-
+        
 
         private void Update()
         {
@@ -136,7 +176,7 @@ namespace DxR
             return visSpecs;
         }
 
-        public int GetNumMarkInstances()
+        public int GetNumMarInstances()
         {
             return markInstances.Count;
         }
@@ -361,16 +401,10 @@ namespace DxR
                     string channelValue = channelEncoding.scale.ApplyScale(markComponent.datum[channelEncoding.field]);
                     markComponent.SetChannelValue(channelEncoding.channel, channelValue);
                 }
-                
-                // points[i] = new SplinePoint();
-                // points[i].position = markComponent.GetPos();
-                // points[i].normal = Vector3.up;
-                // points[i].size = 1f;
-                // points[i].color = Color.blue;
 
             }
             
-            // Createline(points);
+     
         }
 
      
@@ -590,10 +624,10 @@ namespace DxR
 
             // Loop through the values in the specification
             // and insert one Dictionary entry in the values list for each.
+            int tempindex = 0;
             foreach (JSONNode value in valuesSpecs.Children)
             {
                 Dictionary<string, string> d = new Dictionary<string, string>();
-
                 bool valueHasNullField = false;
                 for (int fieldIndex = 0; fieldIndex < numDataFields; fieldIndex++)
                 {
@@ -606,10 +640,25 @@ namespace DxR
                         Debug.Log("value null found: ");
                         break;
                     }
-                   
+                    
                     d.Add(curFieldName, value[curFieldName]);
+                    
+                //add the line index dic ----------------------------
+                //type_mark -> int
+                    if (curFieldName == "type_mark")
+                    {
+                        if (LineindexDic.ContainsKey(value[curFieldName]))
+                        {
+                            LineindexDic[value[curFieldName]].Add(tempindex);
+                            Debug.Log("1");
+                        }
+                        else
+                            LineindexDic[value[curFieldName]] = new List<int>{ tempindex };
+                    }
                 }
-
+                tempindex++;
+                
+                // ----------------------------------------------------
                 if (!valueHasNullField)
                 {
                     data.values.Add(d);

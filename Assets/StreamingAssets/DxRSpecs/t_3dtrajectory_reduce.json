@@ -1,0 +1,62 @@
+{
+  "data" : {
+    "url" : "Ballline_reduce.json"
+  },
+  "mark" : "sphere",
+  "encoding" : {
+    "x" : {
+      "field" : "position_x",
+      "type" : "quantitative",
+      "scale" : {
+        "domain" : [
+          1,
+          3.5
+        ]
+      },
+      "axis" : {
+        "title" : "Pos_x"
+      }
+    },
+    "y" : {
+      "field" : "position_z",
+      "type" : "quantitative",
+      "scale" : {
+        "domain" : [
+          0.8,
+          1.4
+          
+        ]
+      },
+      
+      "axis" : {
+        "title" : "Pos_y"
+      }
+    },
+    "z" : {
+      "field" : "position_y",
+      "type" : "quantitative",
+      "scale" : {
+        "domain" : [
+          -0.2,
+          0.8
+        ]
+      },
+      "axis" : {
+        "title" : "Pos_z"
+      }
+    },
+    "color" : {
+      "field" : "time",
+      "type" : "quantitative",
+      "scale": {
+        "domain": [ "0", "200" ]
+      }
+    },
+    "size" : {
+      "value" : 30
+    }
+  },
+  "width" : 500,
+  "height" : 500,
+  "depth" : 500
+}

@@ -1,14 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DxR;
 using UnityEngine;
+using Oculus.Interaction.Input;
+
 
 public class myOVRinterface : MonoBehaviour
 {
-    [SerializeField]
-    public OVRManager MyManager;
     
-  
+    public OVRManager MyManager;
+    public IController myController;
+    public Vis myDxR;
+
+    public enum Datatype
+    {
+        trajectory,
+        scatter,
+    }
+
+    public Datatype currenttype = Datatype.scatter;
     
     public void ChangePassthroughState()
     {
@@ -16,8 +27,41 @@ public class myOVRinterface : MonoBehaviour
         Debug.Log("successfully change the passthrough state");
     }
 
-    private void Update()
+    public void SwitchData()
     {
+        // switch
+        ChangeDataViz();
+        myDxR.UpdateVisSpecsFromTextSpecs();
+        Debug.Log("change the data");
+    }
+
+    private void Awake()
+    {
+       
+    }
+
+    private void ChangeDataViz()
+    {
+        if (currenttype == Datatype.trajectory) currenttype = Datatype.scatter;
+        else currenttype = Datatype.trajectory;
         
+        switch (currenttype)
+        {
+            case Datatype.scatter:
+                myDxR.visSpecsURL = "scatterplot3D.json";
+                myDxR.Renderline = false;
+                break;
+            case Datatype.trajectory:
+                myDxR.visSpecsURL = "t_3dtrajectory_reduce.json";
+                myDxR.Renderline = true;
+                //myDxR
+                break;
+        }
+    }
+
+
+    void Update()
+    {
+  
     }
 }

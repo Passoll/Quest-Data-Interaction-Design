@@ -73,7 +73,7 @@ namespace DxR
 
         [Header("3DLineProperty")]
         [SerializeField]
-        private bool Renderline = false;
+        public bool Renderline = false;
         [SerializeField]
         private Material linemat;
         private Dictionary<int, List<int>> LineindexDic = new Dictionary<int, List<int>>();
@@ -111,10 +111,7 @@ namespace DxR
             // Update vis based on the vis specs.
             UpdateVis();
             isReady = true;
-            
-            // Spine creation
-            InitializeLine();
-            
+
         }
 
         private void InitializeLine()
@@ -195,7 +192,9 @@ namespace DxR
                 tooltip.SetActive(false);
             }
         }
-
+        
+        
+        
         /// <summary>
         /// Update the visualization based on the current visSpecs object (whether updated from GUI or text editor).
         /// Currently, deletes everything and reconstructs everything from scratch.
@@ -214,6 +213,9 @@ namespace DxR
             InferVisSpecs();
 
             ConstructVis(visSpecsInferred);
+            
+            // ---------------------- add feature Spine creation
+            InitializeLine();
         }
 
         private void ConstructVis(JSONNode specs)
@@ -758,6 +760,13 @@ namespace DxR
             {
                 GameObject.Destroy(child.gameObject);
             }
+            
+            //add the line destroy
+            foreach (Transform child in linesParentObject.transform)
+            {
+                LineindexDic.Clear();//important!!
+                GameObject.Destroy(child.gameObject);
+            }
 
             // TODO: Do not delete, but only update:
             foreach (Transform child in interactionsParentObject.transform)
@@ -783,6 +792,8 @@ namespace DxR
         {
             gui.UpdateGUISpecsFromVisSpecs();
         }
+        
+       
 
         public void UpdateVisSpecsFromGUISpecs()
         {
@@ -1022,9 +1033,8 @@ namespace DxR
 
             JSONNode textSpecs;
             parser.Parse(visSpecsURL, out textSpecs);
-
+            
             visSpecs = textSpecs;
-
             gui.UpdateGUISpecsFromVisSpecs();
             UpdateVis();
         }

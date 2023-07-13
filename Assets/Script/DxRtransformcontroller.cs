@@ -99,17 +99,24 @@ public class DxRtransformcontroller : MonoBehaviour
     
     void LateUpdate()
     {
-        if (_anchorSelect && !_dySelect )
+        if (OVRInput.IsControllerConnected(OVRInput.Controller.Hands))
         {
-            UpdateOnlyMove();
+            if (_anchorSelect && !_dySelect )
+            {
+                UpdateOnlyMove();
+            }
+            else if (_anchorSelect && _dySelect)
+            {
+                UpdateDynamic();
+            }
+            else if ( !_anchorSelect && _dySelect)
+            {
+                UpdateScale();
+            }
         }
-        else if (_anchorSelect && _dySelect)
+        else
         {
             UpdateDynamic();
-        }
-        else if ( !_anchorSelect && _dySelect)
-        {
-            UpdateScale();
         }
 
     }

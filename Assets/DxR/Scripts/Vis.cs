@@ -142,6 +142,7 @@ namespace DxR
                         
                         Createline(points, subobj);
                         lineInstances.Add(subobj);
+                        
                     }
                 }
             }
@@ -755,7 +756,6 @@ namespace DxR
             {
                 GameObject.Destroy(child.gameObject);
             }
-
             foreach (Transform child in marksParentObject.transform)
             {
                 GameObject.Destroy(child.gameObject);

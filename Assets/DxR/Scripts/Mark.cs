@@ -5,6 +5,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using Oculus.Interaction;
 
 namespace DxR
 {
@@ -1091,6 +1092,18 @@ namespace DxR
             {
                 Debug.Log("Cannot set color of mark without renderer object.");
             }
+            
+            //<Ayse> ------------------------------
+            // set normal color to the original color
+            InteractableDebugVisual visual = transform.GetComponent<InteractableDebugVisual>();
+            if(visual != null)
+            {
+                visual.NormalColor = color;
+            } else
+            {
+                Debug.Log("No Debug Visual here");
+            }
+            
         }
 
         private void SetOpacity(string value)

@@ -12,6 +12,7 @@ public class myOVRinterface : MonoBehaviour
     public OVRManager MyManager;
     public IController myController;
     public Vis myDxR;
+    //public GameObject Axis;
 
     public enum Datatype
     {

@@ -36,7 +36,6 @@ namespace Oculus.Interaction.Editor
         private void Awake()
         {
             _interactable = target as PokeInteractable;
-
             _surfaceProperty = serializedObject.FindProperty("_surfacePatch");
         }
 

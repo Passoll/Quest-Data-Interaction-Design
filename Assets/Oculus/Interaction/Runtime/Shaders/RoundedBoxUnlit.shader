@@ -15,7 +15,7 @@ Shader "Interaction/RoundedBoxUnlit"
     Properties
     {
         _Color("Color", Color) = (0, 0, 0, 1)
-
+        _MainTex("Base (RGB) Trans (A)", 2D) = "white" {}
         _BorderColor("BorderColor", Color) = (0, 0, 0, 1)
 
         // width, height, border radius, unused
@@ -66,6 +66,9 @@ Shader "Interaction/RoundedBoxUnlit"
                 fixed4 dimensions : TEXCOORD2;
                 fixed4 radii : TEXCOORD3;
             };
+            
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
 
             UNITY_INSTANCING_BUFFER_START(Props)
                 UNITY_DEFINE_INSTANCED_PROP(fixed4, _Color)
@@ -114,7 +117,9 @@ Shader "Interaction/RoundedBoxUnlit"
                 float colorLerpParam = saturate(innerDistOverLen) * borderMask;
                 float4 fragColor = lerp(i.color, i.borderColor, colorLerpParam);
                 fragColor.a *= (1.0 - saturate(outerDistOverLen));
-                return fragColor;
+                
+                fixed4 col = tex2D(_MainTex, i.uv / 2 + 0.5 );
+                return fragColor + col.a;
             }
             ENDCG
         }

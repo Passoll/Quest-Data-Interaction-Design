@@ -8,7 +8,7 @@ Shader "Myshader/SinglePassUnlit"
         SubShader{
         Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
-
+        Cull off
         // extra pass that renders to depth buffer only
         Pass{
             ZWrite On

@@ -418,5 +418,14 @@ public class OVRGrabber : MonoBehaviour
 			}
 		}
 	}
+
+    public void ForceGrab(OVRGrabbable grabbable)
+    {
+        GrabVolumeEnable(true);
+
+        m_grabbedObj = grabbable;
+        m_grabbedObj.GrabBegin(this, grabbedObject.GetComponent<Collider>());
+        //m_grabbedObj.isGrabbed = true;
+    }
 }
 

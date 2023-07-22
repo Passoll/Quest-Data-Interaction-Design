@@ -71,13 +71,12 @@ namespace DxR
         public int FrameCount { get { return frameCount; } set { frameCount = value; } }
         
 
-        [Header("3DLineProperty")]
-        [SerializeField]
+        [Header("3DLineProperty")] [SerializeField]
         public bool Renderline = false;
         [SerializeField]
         private Material linemat;
         private Dictionary<int, List<int>> LineindexDic = new Dictionary<int, List<int>>();
-
+        
         private void Awake()
         {
             //steamingAssets settings
@@ -111,11 +110,13 @@ namespace DxR
             // Update vis based on the vis specs.
             UpdateVis();
             isReady = true;
-
+            
         }
-
+        
+        
         private void InitializeLine()
         {
+            //TOD0 Editing the line
             lineInstances = new List<GameObject>();
             if (Renderline)
             {
@@ -158,6 +159,9 @@ namespace DxR
             splineRender.size = 0.04f;
             var obj = parentobj.GetComponent<MeshRenderer>();
             
+            //Close the editor to increase the performance
+            splineRender.autoOrient = false;
+
             Material newMaterial = Instantiate(linemat);
             obj.material = newMaterial;
             newMaterial.color = Random.ColorHSV(0.5f, 0.75f, 0.3f, 0.6f, 0.3f, 0.6f);;

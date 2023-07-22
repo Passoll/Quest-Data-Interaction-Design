@@ -1090,15 +1090,16 @@ namespace DxR
                 renderer.material.color = color;
             } else
             {
-                Debug.Log("Cannot set color of mark without renderer object.");
+                Debug.Log("No renderer obj here ");
             }
             
             //<Ayse> ------------------------------
             // set normal color to the original color
-            InteractableDebugVisual visual = transform.GetComponent<InteractableDebugVisual>();
+            InteractableDebugVisual visual = transform.GetComponentInChildren<InteractableDebugVisual>();
             if(visual != null)
             {
                 visual.NormalColor = color;
+                Debug.Log("Set the debug visual true ");
             } else
             {
                 Debug.Log("No Debug Visual here");

@@ -5,6 +5,7 @@ using Oculus.Interaction;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /* Written by: Ayse Zhong, 2023.7
  *
@@ -34,17 +35,23 @@ namespace DxRextention
     {
         private bool Valid = false;
         private bool Selected = false;
+        
         private Transform anchor; // calculate the pos
         public Transform startanchor; // the positon keep stay
-        
-        public GameObject Plane;
-        public GameObject Menu;
         public SliderManager _sliderManager;
+        
+        public GameObject PlaneParent;
+        private MeshRenderer[] PlaneRenderer;
+        public GameObject Menu;
+        
         public DxRtransformcontroller _DxRtransformcontroller;
+       
 
         [Range(0, 1), Tooltip("valid threshold")]
         public float threshold;
 
+        private Color positivecolor;
+        private Color negcolor;
         public enum TAxis
         {
             X,
@@ -69,15 +76,44 @@ namespace DxRextention
             get { return _rangeState; }
             set { _rangeState = value; }
         }
+        
 
         void Start()
         {
             this.BeginStart(ref _started);
-            Menu.SetActive(false);
-            Plane.SetActive(false);
-            anchor = _sliderManager.anchor;
             
+            //Setup itself
+            Menu.SetActive(false);
+            PlaneParent.SetActive(false);
+            anchor = _sliderManager.anchor;
             transform.position = startanchor.position;
+
+            positivecolor = _sliderManager.positivecolor;
+            negcolor = _sliderManager.negcolor;
+
+            if (_sliderManager == null)
+            {
+                _sliderManager = transform.parent.GetComponent<SliderManager>();
+                if (_sliderManager == null)
+                {
+                    Debug.LogError("No Slider Manager provided");
+                }
+            }
+
+            PlaneRenderer = PlaneParent.GetComponentsInChildren<MeshRenderer>();
+            
+            
+            if (_rangeState)
+            {
+                PlaneRenderer[0].material.color = positivecolor;
+                PlaneRenderer[1].material.color = negcolor;
+            }
+            else
+            {
+                PlaneRenderer[1].material.color = negcolor;
+                PlaneRenderer[0].material.color = positivecolor;
+            }
+            
             this.EndStart(ref _started);
         }
         
@@ -116,7 +152,7 @@ namespace DxRextention
             if (Valid == false)
             {
                 Menu.SetActive(true);
-                Plane.SetActive(true);
+                PlaneParent.SetActive(true);
                 tempslider = Instantiate(gameObject, _sliderManager.transform);
             }
         }
@@ -144,7 +180,7 @@ namespace DxRextention
                     
                     Valid = false;
                     Menu.SetActive(false);
-                    Plane.SetActive(false);
+                    PlaneParent.SetActive(false);
                     transform.position = startanchor.position;
                 }
             }
@@ -169,6 +205,17 @@ namespace DxRextention
             _rangeState = !_rangeState;
             SliderRange range = new SliderRange(_rangeMark, _rangeState);
             _sliderManager.UpdateCurrentRange(gameObject, range, BoxAxis);
+            
+            if (_rangeState)
+            {
+                PlaneRenderer[0].material.color = positivecolor;
+                PlaneRenderer[1].material.color = negcolor;
+            }
+            else
+            {
+                PlaneRenderer[0].material.color = negcolor;
+                PlaneRenderer[1].material.color = positivecolor;
+            }
  
         }
         

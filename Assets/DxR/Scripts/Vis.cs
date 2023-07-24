@@ -159,8 +159,11 @@ namespace DxR
             splineRender.size = 0.04f;
             var obj = parentobj.GetComponent<MeshRenderer>();
             
-            //Close the editor to increase the performance
+            //Setting on spline, Close the editor to increase the performance
             splineRender.autoOrient = false;
+            splineRender.autoUpdate = false;
+            splineRender.buildOnAwake = true;
+            splineRender.buildOnEnable = true;
 
             Material newMaterial = Instantiate(linemat);
             obj.material = newMaterial;

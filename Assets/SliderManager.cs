@@ -148,27 +148,26 @@ namespace DxRextention
         //Store the Mark iterable and mark
         private Dictionary<GameObject, Transform> _DxRmarkinstance = new Dictionary<GameObject, Transform>();
         public Transform anchor;
+        
+        public Color positivecolor;
+        public Color negcolor;
 
         private void Start()
         {
-            foreach (var instance in DxRManager.markInstances)
-            {
-                _DxRmarkinstance.Add(instance, instance.transform.Find("Interactable"));
-            }
-
-            XYZranges.Add(new SliderRange());
-            XYZranges.Add(new SliderRange());
-            XYZranges.Add(new SliderRange());
-
+            InitializeSlider();
         }
 
-        //TOD1 : call every time switch the data
-        public void InitializeMarkInstance()
+        //TOD1 : call every time switch the data or start
+        public void InitializeSlider()
         {
+            ClearAllslider();
             foreach (var instance in DxRManager.markInstances)
             {
                 _DxRmarkinstance.Add(instance, instance.transform.Find("Interactable"));
             }
+            XYZranges.Add(new SliderRange());
+            XYZranges.Add(new SliderRange());
+            XYZranges.Add(new SliderRange());
         }
 
         public bool Addslider(SlidingBlock.TAxis axis, GameObject newslider, SliderRange newrange)
@@ -232,15 +231,41 @@ namespace DxRextention
             }
         }
 
-        
-        public bool Clearslider(SlidingBlock.TAxis axis)
+        // Those invalid slider will be kept
+        private bool ClearAllslider()
         {
-            //TOD1 Clear all slider
+            if (XInstances.Count > 0)
+            {
+                foreach (var obj in XInstances)
+                {
+                    Destroy(obj.Key);
+                }
+            }
+
+            if (YInstances.Count > 0)
+            {
+                foreach (var obj in YInstances)
+                {
+                    Destroy(obj.Key);
+                }
+            }
+
+            if (ZInstances.Count > 0)
+            {
+                foreach (var obj in ZInstances)
+                {
+                    Destroy(obj.Key);
+                }
+            }
+            XInstances.Clear();
+            YInstances.Clear();
+            ZInstances.Clear();
+            XYZranges.Clear();
+            _DxRmarkinstance.Clear();
+            
             return true;
         }
         
-        
-    
         //Call When change the Current instance
         public void UpdateCurrentRange(GameObject instance, SliderRange temprange, SlidingBlock.TAxis axis)
         {
@@ -256,7 +281,7 @@ namespace DxRextention
                     }
                     XYZranges[0].AddRange((temprange.GetItem1(), temprange.GetItem2()));
                     UpdateMarkInstance();
-                    XYZranges[0].clearRange();
+                    //XYZranges[0].clearRange();
                     
                     break;
                 case SlidingBlock.TAxis.Y:
@@ -269,7 +294,7 @@ namespace DxRextention
                     }
                     XYZranges[1].AddRange((temprange.GetItem1(), temprange.GetItem2()));
                     UpdateMarkInstance();
-                    XYZranges[1].clearRange();
+                    //XYZranges[1].clearRange();
                     
                     break;
                 case SlidingBlock.TAxis.Z:
@@ -282,7 +307,7 @@ namespace DxRextention
                     }
                     XYZranges[2].AddRange((temprange.GetItem1(), temprange.GetItem2()));
                     UpdateMarkInstance();
-                    XYZranges[2].clearRange();
+                    //XYZranges[2].clearRange();
                     
                     break;
             }

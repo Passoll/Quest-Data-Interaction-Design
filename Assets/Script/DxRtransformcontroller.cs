@@ -61,6 +61,8 @@ namespace DxRextention
         private Vector3 BoundSize;
         private Vector3 startsize;
 
+        private float resizeconstant;
+
 
         //Only the x difference of the box matters.
 
@@ -94,13 +96,14 @@ namespace DxRextention
             xy_proportion = bound.extents.y / bound.extents.x;
             
             // Set the proportion of boxdy
-            float templenth = Fixtransform(); 
-            
+            float templenth = Fixtransform();
             // then reset the DxRsize
             float matchlength = bound.max.x - bound.min.x;
+
+            resizeconstant = templenth / matchlength;
             
             // set the parent to avoid conflict
-            DxRview.parent.transform.localScale = DxRview.parent.transform.localScale * templenth / matchlength;
+            DxRview.parent.transform.localScale = DxRview.parent.transform.localScale * resizeconstant;
             _diagonlenth = (boxanchor.position - boxdy.position).magnitude;
             _relativepos = boxdy.position - boxanchor.position;
             
@@ -108,6 +111,16 @@ namespace DxRextention
             bound = GetChildrenbound(DxRview);
             BoundSize = bound.extents * 2;
             startsize = BoundSize;
+        }
+        
+        //Test Only, this function is for the size match for DxR to avoid switching data's problem
+        public void resizeTo()
+        {
+            DxRview.parent.transform.localScale = DxRview.parent.transform.localScale / resizeconstant;
+        }
+        public void resizeBack()
+        {
+            DxRview.parent.transform.localScale = DxRview.parent.transform.localScale * resizeconstant;
         }
 
         public void SetAnchorSelect(bool state)

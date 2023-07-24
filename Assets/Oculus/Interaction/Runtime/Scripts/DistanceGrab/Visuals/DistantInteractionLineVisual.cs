@@ -149,7 +149,7 @@ namespace Oculus.Interaction.DistanceReticles
 
             if (!component.TryGetComponent(out _target))
             {
-                _dummyTarget.Target = interactable.RelativeTo;
+                _dummyTarget.Target = interactable.RelativeTo;//rigid body.transform
                 _target = _dummyTarget;
             }
         }
@@ -166,7 +166,7 @@ namespace Oculus.Interaction.DistanceReticles
             Vector3 start = origin + direction * VisualOffset;
             Vector3 end = TargetHit(DistanceInteractor.HitPoint);
             Vector3 middle = start + direction * Vector3.Distance(start, end) * 0.5f;
-
+            
             for (int i = 0; i < NumLinePoints; i++)
             {
                 float t = i / (NumLinePoints - 1f);

@@ -6191,6 +6191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetFromHand: {x: 0.02, y: 0.06, z: -0.08}
+  c1: {r: 1, g: 0.7027024, b: 0.015686274, a: 1}
+  c2: {r: 0.8396226, g: 0.21782663, b: 0.21782663, a: 1}
+  DxRanchorpoint: {fileID: 838829111}
+  enblerotLine: 1
+  lengthOfLineRenderer: 2
 --- !u!1001 &979193308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12364,9 +12369,9 @@ MonoBehaviour:
   _whenSelect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 634292955}
-        m_TargetAssemblyTypeName: OVRHM_RotateProxy, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 634292956}
+        m_TargetAssemblyTypeName: DxRextention.myOVRinterface, Assembly-CSharp
+        m_MethodName: ToggleRotateProxy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

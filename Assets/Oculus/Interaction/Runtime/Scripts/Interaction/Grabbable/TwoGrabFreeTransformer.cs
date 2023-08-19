@@ -156,8 +156,9 @@ namespace Oculus.Interaction
             offsetInTargetSpace /= previousScale;
 
             Quaternion rotationInTargetSpace = Quaternion.Inverse(initialRotation) * targetTransform.rotation;
-
-            targetTransform.position = (targetRotation * (_activeScale * offsetInTargetSpace)) + targetCenter;
+            
+            //targetTransform.position = (targetRotation * (_activeScale * offsetInTargetSpace)) + targetCenter;
+            targetTransform.position = initialCenter;
             targetTransform.rotation = targetRotation * rotationInTargetSpace;
             targetTransform.localScale = _activeScale * _initialLocalScale;
 

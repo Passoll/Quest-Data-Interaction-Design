@@ -102,7 +102,6 @@ namespace DxRextention
 
             PlaneRenderer = PlaneParent.GetComponentsInChildren<MeshRenderer>();
             
-            
             if (_rangeState)
             {
                 PlaneRenderer[0].material.color = positivecolor;
@@ -176,7 +175,7 @@ namespace DxRextention
                     //----- Invalid creation
                     Destroy(tempslider);
                     tempslider = null;
-                    _sliderManager.RemoveSliderCheck(BoxAxis);//After destroy we need to kicknull
+                    _sliderManager.RemoveSliderCheck(BoxAxis);//After destroy we need to kick null
                     
                     Valid = false;
                     Menu.SetActive(false);
@@ -222,26 +221,26 @@ namespace DxRextention
 
         private void FixAxis()
         {
-            Vector3 anchor = this.anchor.position;
+            Vector3 anchor = this.anchor.localPosition;
             switch (BoxAxis)
             {
                 case TAxis.X:
-                    float x = Mathf.Min(Mathf.Max(gameObject.transform.position.x, anchor.x),
+                    float x = Mathf.Min(Mathf.Max(gameObject.transform.localPosition.x, anchor.x),
                         anchor.x + _DxRtransformcontroller.GetBoundSize().x);
-                    gameObject.transform.position = new Vector3(x, anchor.y, anchor.z);
-                    gameObject.transform.rotation = Quaternion.identity;
+                    gameObject.transform.localPosition = new Vector3(x, anchor.y, anchor.z);
+                    gameObject.transform.localRotation = Quaternion.identity;
                     break;
                 case TAxis.Y:
-                    float y = Mathf.Min(Mathf.Max(gameObject.transform.position.y, anchor.y),
+                    float y = Mathf.Min(Mathf.Max(gameObject.transform.localPosition.y, anchor.y),
                         anchor.y + _DxRtransformcontroller.GetBoundSize().y);
-                    gameObject.transform.position = new Vector3(anchor.x, y, anchor.z);
-                    gameObject.transform.rotation = Quaternion.identity;
+                    gameObject.transform.localPosition = new Vector3(anchor.x, y, anchor.z);
+                    gameObject.transform.localRotation = Quaternion.identity;
                     break;
                 case TAxis.Z:
-                    float z = Mathf.Min(Mathf.Max(gameObject.transform.position.z, anchor.z),
+                    float z = Mathf.Min(Mathf.Max(gameObject.transform.localPosition.z, anchor.z),
                         anchor.z + _DxRtransformcontroller.GetBoundSize().z);
-                    gameObject.transform.position = new Vector3(anchor.x, anchor.y, z);
-                    gameObject.transform.rotation = Quaternion.identity;
+                    gameObject.transform.localPosition = new Vector3(anchor.x, anchor.y, z);
+                    gameObject.transform.localRotation = Quaternion.identity;
                     break;
             }
         }

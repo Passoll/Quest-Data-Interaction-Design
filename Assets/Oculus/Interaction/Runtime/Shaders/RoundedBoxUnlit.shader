@@ -38,7 +38,7 @@ Shader "Interaction/RoundedBoxUnlit"
         Blend SrcAlpha OneMinusSrcAlpha
         ZTest [_ZTest]
         LOD 100
-        //Cull off 
+        Cull off 
         Pass
         {
             CGPROGRAM

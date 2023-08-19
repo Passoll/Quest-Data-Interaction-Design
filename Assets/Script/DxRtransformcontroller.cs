@@ -38,7 +38,8 @@ namespace DxRextention
         private MonoBehaviour _interactableView_Grab;
         private IInteractableView InteractableView_d;
         private IInteractableView InteractableView_g;
-
+        
+        [Space]
         [SerializeField] public Transform boxdy;
         [SerializeField, Interface(typeof(IInteractableView)), Tooltip("Dynamic interactable View Distance Grab")]
         private MonoBehaviour _dyinteractableView_Dis;
@@ -46,16 +47,17 @@ namespace DxRextention
         private MonoBehaviour _dyinteractableView_Grab;
         private IInteractableView dyInteractableView_d;
         private IInteractableView dyInteractableView_g;
-
+        
+        [Space]
         [SerializeField] public Transform DxRview;
-
+        
+        private bool Show_controll_toggle = true; // show the controll box
         private float _diagonlenth;
         protected bool _started;
         private Vector3 _relativepos;
         //if all the box move
         private bool _anchorSelect;
         private bool _dySelect;
-        private bool Show_controll_toggle = true; // show the controll box
         private float xy_proportion;
 
         private Vector3 BoundSize;
@@ -87,6 +89,8 @@ namespace DxRextention
             PrepareDxRTransform();
             this.EndStart(ref _started);
             SetEnableTransform(true);
+
+            Toggle_transform();//close the block at the start
         }
 
         private void PrepareDxRTransform()
@@ -136,7 +140,12 @@ namespace DxRextention
         public Vector3 GetBoundSize()
         {
             return BoundSize;
-        } 
+        }
+
+        public bool Getshowstate()
+        {
+            return Show_controll_toggle;
+        }
         
 
         protected void SetEnableTransform(bool state)
@@ -204,7 +213,6 @@ namespace DxRextention
             _relativepos = boxdy.position - boxanchor.position;
             float scale = _relativepos.magnitude / _diagonlenth;
             DxRview.localScale = new Vector3(scale, scale, scale);
-            
             //Bounds bound = GetChildrenbound(DxRview);
             BoundSize = scale * startsize;
 
@@ -219,9 +227,10 @@ namespace DxRextention
         private void UpdateDynamic()
         {
             DxRview.position = boxanchor.position;
-            float scale = (boxanchor.position - boxdy.position).magnitude / _diagonlenth;
-            DxRview.localScale = new Vector3(scale, scale, scale);
             _relativepos = boxdy.position - boxanchor.position;
+            float scale = _relativepos.magnitude / _diagonlenth;
+            DxRview.localScale = new Vector3(scale, scale, scale);
+            BoundSize = scale * startsize;
         }
         
         //return the x difference
@@ -229,8 +238,8 @@ namespace DxRextention
         {
             boxanchor.rotation = new Quaternion(0, 0, 0, 0);
             boxdy.rotation = new Quaternion(0, 0, 0, 0);
-            float templenth = Mathf.Abs(boxanchor.position.x - boxdy.position.x);
-            boxdy.position = boxanchor.position + new Vector3(templenth, templenth * xy_proportion, 0);
+            float templenth = Mathf.Abs(boxanchor.localPosition.x - boxdy.localPosition.x);
+            boxdy.localPosition = boxanchor.localPosition + new Vector3(templenth, templenth * xy_proportion, 0);
             return templenth;
         }
 

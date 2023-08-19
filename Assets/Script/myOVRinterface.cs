@@ -14,8 +14,12 @@ namespace DxRextention
         public OVRManager MyManager;
         public DxRtransformcontroller myController;
         public Vis myDxR;
+        public Material SkyboxMat;
+        public Spatula spat;
 
         public SliderManager myslider;
+
+        public OVRHM_RotateProxy rot;
         //public GameObject Axis;
     
         public enum Datatype
@@ -23,12 +27,14 @@ namespace DxRextention
             trajectory,
             scatter,
         }
-    
+
         public Datatype currenttype = Datatype.scatter;
         
         public void ChangePassthroughState()
         {
             MyManager.isInsightPassthroughEnabled = !MyManager.isInsightPassthroughEnabled;
+            if(MyManager.isInsightPassthroughEnabled) RenderSettings.skybox = null;
+            else RenderSettings.skybox = SkyboxMat;
             Debug.Log("successfully change the passthrough state");
         }
     
@@ -47,6 +53,13 @@ namespace DxRextention
         public void ToggleTransform()
         {
             myController.Toggle_transform();
+            myslider.SetSliderState(!myController.Getshowstate());
+        }
+
+        public void ToggleSpatMode()
+        {
+            spat.ToggleVisibility();
+            myslider.resetslider();
         }
 
         private void ChangeDataViz()
@@ -67,8 +80,13 @@ namespace DxRextention
                     break;
             }
         }
-        
-        
+
+        public void ToggleRotateProxy()
+        {
+            rot.ToggleVisibility();
+        }
+
+
     }
 
 }

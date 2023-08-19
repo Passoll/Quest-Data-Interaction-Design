@@ -85,9 +85,16 @@ namespace DxR
             // Initialize objects:
             parentObject = gameObject;
             viewParentObject = gameObject.transform.Find("DxRView").gameObject;
-            marksParentObject = viewParentObject.transform.Find("DxRMarks").gameObject;
-            linesParentObject = viewParentObject.transform.Find("DxRLines").gameObject;
-            guidesParentObject = viewParentObject.transform.Find("DxRGuides").gameObject;
+            
+            // marksParentObject = viewParentObject.transform.Find("DxRMarks").gameObject;
+            // linesParentObject = viewParentObject.transform.Find("DxRLines").gameObject;
+            // guidesParentObject = viewParentObject.transform.Find("DxRGuides").gameObject;
+            //add
+            GameObject scalable = viewParentObject.transform.Find("Scalable").gameObject;
+            marksParentObject = scalable.transform.Find("DxRMarks").gameObject;
+            linesParentObject = scalable.transform.Find("DxRLines").gameObject;
+            guidesParentObject = scalable.transform.Find("DxRGuides").gameObject;
+            
             interactionsParentObject = gameObject.transform.Find("DxRInteractions").gameObject;
 
             if (viewParentObject == null || marksParentObject == null)

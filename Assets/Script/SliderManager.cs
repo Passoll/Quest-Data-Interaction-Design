@@ -138,23 +138,34 @@ namespace DxRextention
         [Tooltip("Max slider on one axis")]
         public int maxslider = 5;
         
+        //This not include the father slider
         public Dictionary<GameObject, SliderRange> XInstances = new Dictionary<GameObject, SliderRange>();
         public Dictionary<GameObject, SliderRange> YInstances = new Dictionary<GameObject, SliderRange>();
         public Dictionary<GameObject, SliderRange> ZInstances = new Dictionary<GameObject, SliderRange>();
-        private List<SliderRange> XYZranges = new List<SliderRange>();
         
+        private List<SliderRange> XYZranges = new List<SliderRange>();
         public DxRtransformcontroller _DxRtransformcontroller;
         public DxR.Vis DxRManager;
+        
+        [Space]
         //Store the Mark iterable and mark
         private Dictionary<GameObject, Transform> _DxRmarkinstance = new Dictionary<GameObject, Transform>();
-        public Transform anchor;
+        public Transform anchor;//the master anchor for the whole slider calculation
         
         public Color positivecolor;
         public Color negcolor;
+        
+        private Transform X;
+        private Transform Y;
+        private Transform Z;
+        
 
-        private void Start()
+        private void Awake()
         {
             InitializeSlider();
+            X = gameObject.transform.Find("DxRSliderX");
+            Y = gameObject.transform.Find("DxRSliderY");
+            Z = gameObject.transform.Find("DxRSliderZ");
         }
 
         //TOD1 : call every time switch the data or start
@@ -169,6 +180,25 @@ namespace DxRextention
             XYZranges.Add(new SliderRange());
             XYZranges.Add(new SliderRange());
         }
+
+        //Use this for temporary disable the viz of slider.
+        public void SetSliderState(bool state)
+        {
+            //TOD1 : fix all the state in the gameobj
+            X.gameObject.SetActive(state);
+            Y.gameObject.SetActive(state);
+            Z.gameObject.SetActive(state);
+        }
+
+        public void resetslider()
+        {
+            foreach (var instance in _DxRmarkinstance)
+            {
+                instance.Value.gameObject.SetActive(true);
+            }
+            InitializeSlider();
+        }
+    
 
         public bool Addslider(SlidingBlock.TAxis axis, GameObject newslider, SliderRange newrange)
         {
@@ -198,6 +228,7 @@ namespace DxRextention
             }
             return false;
         }
+    
 
         //Clear instance in the block and Update the range
         public void RemoveSliderCheck(SlidingBlock.TAxis axis)
@@ -332,7 +363,7 @@ namespace DxRextention
 
         private bool CheckinRange(Transform instance)
         {
-            Vector3 instance_vec = instance.position - anchor.position;
+            Vector3 instance_vec = instance.localPosition - anchor.localPosition;
             Vector3 boundSize = _DxRtransformcontroller.GetBoundSize();
             Vector3 rate = new Vector3(instance_vec.x / boundSize.x,
                 instance_vec.y / boundSize.y,

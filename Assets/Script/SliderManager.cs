@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Oculus.Interaction;
+using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -149,7 +150,7 @@ namespace DxRextention
         
         [Space]
         //Store the Mark iterable and mark
-        private Dictionary<GameObject, Transform> _DxRmarkinstance = new Dictionary<GameObject, Transform>();
+        private Dictionary<GameObject, MarkInterface> _DxRmarkinstance = new Dictionary<GameObject, MarkInterface>();
         public Transform anchor;//the master anchor for the whole slider calculation
         
         public Color positivecolor;
@@ -160,7 +161,7 @@ namespace DxRextention
         private Transform Z;
         
 
-        private void Awake()
+        private void Start()
         {
             InitializeSlider();
             X = gameObject.transform.Find("DxRSliderX");
@@ -174,7 +175,7 @@ namespace DxRextention
             ClearAllslider();
             foreach (var instance in DxRManager.markInstances)
             {
-                _DxRmarkinstance.Add(instance, instance.transform.Find("Interactable"));
+                _DxRmarkinstance.Add(instance, instance.transform.Find("Interactable").GetComponent<MarkInterface>());
             }
             XYZranges.Add(new SliderRange());
             XYZranges.Add(new SliderRange());
@@ -184,19 +185,61 @@ namespace DxRextention
         //Use this for temporary disable the viz of slider.
         public void SetSliderState(bool state)
         {
+            RemoveSliderCheck(SlidingBlock.TAxis.X);
+            RemoveSliderCheck(SlidingBlock.TAxis.Y);
+            RemoveSliderCheck(SlidingBlock.TAxis.Z);
             //TOD1 : fix all the state in the gameobj
-            X.gameObject.SetActive(state);
-            Y.gameObject.SetActive(state);
-            Z.gameObject.SetActive(state);
+            if (X != null)
+            {
+                X.gameObject.SetActive(state);
+            }
+            if (Y != null)
+            {
+                Y.gameObject.SetActive(state);
+            }
+            if (Z != null)
+            {
+                Z.gameObject.SetActive(state);
+            }
+
+            foreach (var slider in XInstances)
+            {
+                slider.Key.SetActive(state);
+            }
+            foreach (var slider in YInstances)
+            {
+                slider.Key.SetActive(state);
+            }
+            foreach (var slider in ZInstances)
+            {
+                slider.Key.SetActive(state);
+            }
         }
 
         public void resetslider()
         {
             foreach (var instance in _DxRmarkinstance)
             {
-                instance.Value.gameObject.SetActive(true);
+                instance.Value.unselectBox();
             }
             InitializeSlider();
+        }
+
+        public void setFatherSlider(SlidingBlock.TAxis axis,Transform newS)
+        {
+            switch (axis)
+            {
+                case SlidingBlock.TAxis.X:
+                    X = newS;
+                    break;
+                case SlidingBlock.TAxis.Y:
+                    Y = newS;
+                    break;
+                case SlidingBlock.TAxis.Z:
+                    Z = newS;
+                    break;
+            }
+            
         }
     
 
@@ -352,11 +395,11 @@ namespace DxRextention
             {
                 if (!CheckinRange(instance.Key.transform))
                 {
-                    instance.Value.gameObject.SetActive(false);
+                    instance.Value.selectBox();
                 }
                 else
                 {
-                    instance.Value.gameObject.SetActive(true);
+                    instance.Value.unselectBox();
                 }
             }
         }
@@ -378,20 +421,18 @@ namespace DxRextention
         
         private void RemoveNullinDic(ref Dictionary<GameObject, SliderRange> dic)
         {
-            List<GameObject> keystoremove = new List<GameObject>();
+            Dictionary<GameObject, SliderRange> temp = new Dictionary<GameObject, SliderRange>();
             if (dic.Count > 0)
             {
                 foreach (var kvp in dic)
                 {
-                    if (kvp.Key == null)
+                    if (kvp.Key != null)
                     {
-                        keystoremove.Add(kvp.Key);
+                        temp.Add(kvp.Key, kvp.Value);
                     }
                 }
-                foreach (GameObject key in keystoremove)
-                {
-                    dic.Remove(key);
-                }
+                dic.Clear();
+                dic = temp;
             }
             
         }

@@ -269,9 +269,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableView: {fileID: 2390189331854781836}
   _renderer: {fileID: 4085425864324908049}
-  _normalColor: {r: 1, g: 0, b: 0, a: 1}
-  _hoverColor: {r: 0, g: 0, b: 1, a: 1}
-  _selectColor: {r: 0, g: 1, b: 0, a: 1}
+  _normalColor: {r: 0.7830189, g: 0.2696244, b: 0.2696244, a: 1}
+  _hoverColor: {r: 0.25952297, g: 0.63311434, b: 0.6792453, a: 1}
+  _selectColor: {r: 0.4782609, g: 0.6509434, b: 0.20572266, a: 1}
   _disabledColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
 --- !u!114 &5894702074290595930
 MonoBehaviour:

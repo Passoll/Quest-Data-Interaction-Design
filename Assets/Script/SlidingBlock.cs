@@ -33,7 +33,7 @@ namespace DxRextention
 {
     public class SlidingBlock : MonoBehaviour
     {
-        private bool Valid = false;
+        private bool Valid = false;// if activated
         private bool Selected = false;
         
         private Transform anchor; // calculate the pos
@@ -162,13 +162,14 @@ namespace DxRextention
         {
             Selected = false;
             float axis_cut = Vector3.Distance(transform.position, anchor.position);
-            if (Valid == false)
+            if (Valid == false)// only the father will have
             {
                 // ---- Valid creation more than boundary and less than max count 
                 SliderRange range = new SliderRange(_rangeMark, _rangeState);
                 if (axis_cut / _tempAxisLength > threshold && _sliderManager.Addslider(BoxAxis, gameObject, range))
                 {
                     Valid = true;
+                    _sliderManager.setFatherSlider(BoxAxis, tempslider.transform);
                 }
                 else
                 {
@@ -190,7 +191,7 @@ namespace DxRextention
                 {
                     Valid = false;
                     Destroy(gameObject);
-                    _sliderManager.RemoveSliderCheck(BoxAxis);
+                    //_sliderManager.RemoveSliderCheck(BoxAxis); // can not operate
                 }
             }
 

@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class SpatNet : MonoBehaviour
 {
-
-    // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<DxRextention.MarkInterface>() != null)
+        var markinterface = other.GetComponent<DxRextention.MarkInterface>();
+        if ( markinterface != null)
         {
-            other.gameObject.SetActive(false);
+            markinterface.selectBox();
         }
-       
     }
 }

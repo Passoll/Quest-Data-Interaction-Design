@@ -16,12 +16,16 @@ namespace DxRextention
         public Vis myDxR;
         public Material SkyboxMat;
         public Spatula spat;
-
         public SliderManager myslider;
-
         public OVRHM_RotateProxy rot;
-        //public GameObject Axis;
-    
+        
+        [Space]
+        public MultiBox box;
+        private List<GameObject> MultiboxList = new List<GameObject>();
+        
+        public Transform Boxanchor;
+
+
         public enum Datatype
         {
             trajectory,
@@ -29,7 +33,16 @@ namespace DxRextention
         }
 
         public Datatype currenttype = Datatype.scatter;
-        
+
+        private void Awake()
+        {
+            //Trick: set away and use the clone
+            box.gameObject.SetActive(true);
+            box.transform.position = new Vector3(10000, 10000, 10000);
+            
+
+        }
+
         public void ChangePassthroughState()
         {
             MyManager.isInsightPassthroughEnabled = !MyManager.isInsightPassthroughEnabled;
@@ -84,6 +97,13 @@ namespace DxRextention
         public void ToggleRotateProxy()
         {
             rot.ToggleVisibility();
+        }
+
+        public void Addmultibox()
+        {
+            GameObject newbox = Instantiate(box.gameObject, Boxanchor.position, Boxanchor.rotation);
+            MultiboxList.Add(newbox);
+            //box.gameObject.SetActive(true);
         }
 
 

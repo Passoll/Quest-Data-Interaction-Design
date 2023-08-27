@@ -4722,7 +4722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetFromHand: {x: 0.1, y: 0, z: 0}
-  playable: {fileID: 611608855}
+  menu_playable: {fileID: 611608855}
   F_Menu: {fileID: 1328354711}
   Trans_Menu: {fileID: 270935849}
   Sel_Menu: {fileID: 700210417}
@@ -8142,7 +8142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &968215547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8653,7 +8653,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c5fb69d49f1add548aaa33a5268d6336, type: 2}
+  - {fileID: 2100000, guid: ffc8acb5425676443898f15e47725634, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25432,7 +25432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6423383599647520238
 GameObject:
   m_ObjectHideFlags: 0

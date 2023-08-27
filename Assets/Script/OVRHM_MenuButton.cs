@@ -10,7 +10,7 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
 {
     public Vector3 offsetFromHand;
     protected CustomHandPlane m_plane;
-    [SerializeField, Optional] private PlayableDirector playable;
+    [SerializeField, Optional] private PlayableDirector menu_playable;
 
     public GameObject F_Menu;
     public GameObject Trans_Menu;
@@ -42,14 +42,11 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
         {
             F_Menu.SetActive(state);
             F_Menu.transform.localPosition = new Vector3(0,0 ,0);
-            if (playable != null)
-            {
-                playable.Play();
-            }
+            play_menuappear();
         }
-       
     }
-    
+
+  
     public void ToggleVisibility()
     {
         F_Menu.SetActive(!F_Menu.activeSelf);
@@ -57,6 +54,7 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
 
     public void SetMenuViz_Transform(bool state)
     {
+        play_menudisappear();
         if (state)
         {
             StartCoroutine(Setobjactive(F_Menu, Trans_Menu));
@@ -67,6 +65,7 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
     
     public void SetMenuViz_Select(bool state)
     {
+        play_menudisappear();
         if (state)
         {
             StartCoroutine(Setobjactive(F_Menu, Sel_Menu));
@@ -86,11 +85,43 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
         }
     }
     
-    IEnumerator Setobjactive(GameObject falsemenu, GameObject truemenu)
+    private void play_menuappear()
     {
-        yield return new WaitForSeconds(0.5f);  // waits for 10 milliseconds
+        if (menu_playable != null)
+        {
+            menu_playable.Play();
+        }
+    }
+    private void play_menudisappear()
+    {
+        menu_playable.time = 0.25f;
+        if (menu_playable != null)
+        {
+            StartCoroutine(PlayableRewind(menu_playable));
+        }
+    }
+    
+    private IEnumerator Setobjactive(GameObject falsemenu, GameObject truemenu)
+    {
+        yield return new WaitForSeconds(0.25f);  // waits for 10 milliseconds
         falsemenu.SetActive(false);
         truemenu.SetActive(true);
+    }
+    
+    private IEnumerator PlayableRewind(PlayableDirector _playable)
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        _playable.time -= 1.0f * Time.deltaTime;  //1.0f是倒帶速度
+        _playable.Evaluate();
+        if (_playable.time < 0f)
+        {
+            _playable.time = 0f;
+            _playable.Evaluate();
+        }
+        else
+        {
+            StartCoroutine(PlayableRewind(_playable));
+        }
     }
     
     

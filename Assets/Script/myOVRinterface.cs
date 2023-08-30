@@ -10,14 +10,21 @@ namespace DxRextention
 {
     public class myOVRinterface : MonoBehaviour
     {
-        
+        [Header("OVR"), Space]
         public OVRManager MyManager;
+        public Material SkyboxMat;
+        public Camera centerEye;
+        
+        [Header("DxR"), Space]
         public DxRtransformcontroller myController;
         public Vis myDxR;
-        public Material SkyboxMat;
-        public Spatula spat;
         public SliderManager myslider;
+        
+        [Header("Control"), Space]
+        
+        public Spatula spat;
         public OVRHM_RotateProxy rot;
+        
         
         [Space]
         public MultiBox box;
@@ -40,13 +47,44 @@ namespace DxRextention
             box.gameObject.SetActive(true);
             box.transform.position = new Vector3(10000, 10000, 10000);
             
+            SetPassthroughState(true);
         }
+
+        public void SetPassthroughState(bool state)
+        {
+            if (state)
+            {
+                centerEye.clearFlags = CameraClearFlags.SolidColor;
+                centerEye.backgroundColor = new Color(0, 0, 0, 0);
+                RenderSettings.skybox = null;
+                MyManager.isInsightPassthroughEnabled = true;
+            }
+            else
+            {
+                centerEye.clearFlags = CameraClearFlags.Skybox;
+                RenderSettings.skybox = SkyboxMat;
+                MyManager.isInsightPassthroughEnabled = false;
+            }
+
+        }
+
 
         public void ChangePassthroughState()
         {
+            if (!MyManager.isInsightPassthroughEnabled)
+            {
+                centerEye.clearFlags = CameraClearFlags.SolidColor;
+                centerEye.backgroundColor = new Color(0, 0, 0, 0);
+                RenderSettings.skybox = null;
+            }
+            else
+            {
+                centerEye.clearFlags = CameraClearFlags.Skybox;
+                RenderSettings.skybox = SkyboxMat;
+            }
+
             MyManager.isInsightPassthroughEnabled = !MyManager.isInsightPassthroughEnabled;
-            if(MyManager.isInsightPassthroughEnabled) RenderSettings.skybox = null;
-            else RenderSettings.skybox = SkyboxMat;
+          
             Debug.Log("successfully change the passthrough state");
         }
     

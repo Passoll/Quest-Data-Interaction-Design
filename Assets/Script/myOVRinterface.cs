@@ -40,7 +40,6 @@ namespace DxRextention
             box.gameObject.SetActive(true);
             box.transform.position = new Vector3(10000, 10000, 10000);
             
-
         }
 
         public void ChangePassthroughState()
@@ -54,6 +53,8 @@ namespace DxRextention
         public void SwitchData()
         {
             // switch viz 
+            myslider.SetSliderState(true);//FIx the XYZ missing
+            
             ChangeDataViz();
             myController.resizeTo();
             myDxR.UpdateVisSpecsFromTextSpecs();

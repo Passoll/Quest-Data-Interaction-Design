@@ -31,7 +31,7 @@ Material:
     - _BorderColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.5849056, g: 0.5545567, b: 0.5545567, a: 0.078431375}
     - _Dimensions: {r: 0.01, g: 0.04, b: 0.002, a: 0}
-    - _EdgeColor: {r: 0.8820755, g: 0.969763, b: 1, a: 1}
-    - _IconColor: {r: 0.40806338, g: 0.65223825, b: 0.6603774, a: 1}
+    - _EdgeColor: {r: 0.48235294, g: 0.48235294, b: 0.48235294, a: 1}
+    - _IconColor: {r: 1, g: 1, b: 1, a: 1}
     - _Radii: {r: 0.2, g: 0.2, b: 0.2, a: 0.2}
   m_BuildTextureStacks: []

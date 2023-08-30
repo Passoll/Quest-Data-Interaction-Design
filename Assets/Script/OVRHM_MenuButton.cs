@@ -10,12 +10,16 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
 {
     public Vector3 offsetFromHand;
     protected CustomHandPlane m_plane;
-    [SerializeField, Optional] private PlayableDirector menu_playable;
 
     public GameObject F_Menu;
     public GameObject Trans_Menu;
     public GameObject Sel_Menu;
 
+    [Space]
+    [SerializeField, Optional] private PlayableDirector menu_playable;
+    [SerializeField, Optional] private PlayableDirector transform_playable;
+    [SerializeField, Optional] private PlayableDirector select_playable;
+    
     private void Awake()
     {
         gameObject.SetActive(true);
@@ -57,7 +61,7 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
         play_menudisappear();
         if (state)
         {
-            StartCoroutine(Setobjactive(F_Menu, Trans_Menu));
+            StartCoroutine(Setobjactive(F_Menu, Trans_Menu, transform_playable));
             //F_Menu.transform.position = new Vector3(100000,100000,100000);
         }
         
@@ -68,7 +72,7 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
         play_menudisappear();
         if (state)
         {
-            StartCoroutine(Setobjactive(F_Menu, Sel_Menu));
+            StartCoroutine(Setobjactive(F_Menu, Sel_Menu, select_playable));
             //F_Menu.transform.position = new Vector3(100000,100000,100000);
         }
     }
@@ -101,11 +105,13 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
         }
     }
     
-    private IEnumerator Setobjactive(GameObject falsemenu, GameObject truemenu)
+    private IEnumerator Setobjactive(GameObject falsemenu, GameObject truemenu, PlayableDirector playble)
     {
         yield return new WaitForSeconds(0.25f);  // waits for 10 milliseconds
         falsemenu.SetActive(false);
         truemenu.SetActive(true);
+        playble.Play();
+
     }
     
     private IEnumerator PlayableRewind(PlayableDirector _playable)

@@ -676,7 +676,7 @@ Transform:
   m_GameObject: {fileID: 113611659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 277930848}
@@ -821,13 +821,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &113611663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,6 +842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _renderers:
   - {fileID: 113611664}
+  - {fileID: 492704816}
   _vectorProperties: []
   _colorProperties: []
   _floatProperties: []
@@ -2184,6 +2185,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 270935850}
+  - component: {fileID: 270935852}
+  - component: {fileID: 270935851}
   m_Layer: 0
   m_Name: TransformTool
   m_TagString: Untagged
@@ -2208,6 +2211,46 @@ Transform:
   m_Father: {fileID: 1714578822}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &270935851
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270935849}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &270935852
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270935849}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 003174ccf02133c4a8b410e63f5fb562, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 4709757139411264546, guid: 003174ccf02133c4a8b410e63f5fb562, type: 2}
+    value: {fileID: 270935851}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &275386752
 GameObject:
   m_ObjectHideFlags: 0
@@ -3115,7 +3158,7 @@ MonoBehaviour:
   _editor: {fileID: 468241580}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -4722,10 +4765,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetFromHand: {x: 0.1, y: 0, z: 0}
-  menu_playable: {fileID: 611608855}
   F_Menu: {fileID: 1328354711}
   Trans_Menu: {fileID: 270935849}
   Sel_Menu: {fileID: 700210417}
+  menu_playable: {fileID: 611608855}
+  transform_playable: {fileID: 270935852}
+  select_playable: {fileID: 700210420}
 --- !u!320 &611608855
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -4741,14 +4786,8 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -783810855370289215, guid: ab77bca71b5afbb49b1abb995fa52c0f, type: 2}
-    value: {fileID: 277930852}
-  - key: {fileID: 4010508980988613332, guid: ab77bca71b5afbb49b1abb995fa52c0f, type: 2}
-    value: {fileID: 242223304}
-  - key: {fileID: -9019521990381857662, guid: ab77bca71b5afbb49b1abb995fa52c0f, type: 2}
-    value: {fileID: 2020518258}
-  - key: {fileID: 8812472150199814034, guid: ab77bca71b5afbb49b1abb995fa52c0f, type: 2}
-    value: {fileID: 1374328792}
+  - key: {fileID: -5777145522486861109, guid: ab77bca71b5afbb49b1abb995fa52c0f, type: 2}
+    value: {fileID: 1328354713}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &614398668 stripped
@@ -5071,7 +5110,7 @@ Transform:
   m_GameObject: {fileID: 663189555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1358590262}
@@ -5216,13 +5255,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &663189559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5379,7 +5418,7 @@ MonoBehaviour:
   _editor: {fileID: 697097908}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -5464,6 +5503,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700210418}
+  - component: {fileID: 700210420}
+  - component: {fileID: 700210419}
   m_Layer: 0
   m_Name: SelectionTool
   m_TagString: Untagged
@@ -5488,6 +5529,46 @@ Transform:
   m_Father: {fileID: 1714578822}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &700210419
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700210417}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!320 &700210420
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700210417}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 5783a3a9f497c984a8877f1ddb11827c, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -6888732940237974222, guid: 5783a3a9f497c984a8877f1ddb11827c, type: 2}
+    value: {fileID: 700210419}
+  m_ExposedReferences:
+    m_References: []
 --- !u!4 &705100782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4658904325700070051, guid: a067db1b6411ce944a12ad8815474543, type: 3}
@@ -8463,7 +8544,7 @@ Transform:
   m_GameObject: {fileID: 1021226995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 242223300}
@@ -8608,13 +8689,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &1021226999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8832,7 +8913,7 @@ Transform:
   m_GameObject: {fileID: 1042405987}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 759314570}
@@ -8977,13 +9058,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &1042405991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9102,7 +9183,7 @@ MonoBehaviour:
   _editor: {fileID: 1044191754}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -9233,7 +9314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5919106134362994298, guid: 5fca3702cdf1a214a94e69dcfa704e17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.053
+      value: -0.051
       objectReference: {fileID: 0}
     - target: {fileID: 5919106134362994298, guid: 5fca3702cdf1a214a94e69dcfa704e17, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10926,7 +11007,7 @@ MonoBehaviour:
   _editor: {fileID: 1236659107}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.14117648, g: 0.14117648, b: 0.14117648, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -11084,7 +11165,7 @@ Transform:
   m_GameObject: {fileID: 1245140006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1493657914}
@@ -11229,13 +11310,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &1245140010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11412,7 +11493,7 @@ MonoBehaviour:
   _editor: {fileID: 1258369559}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -11882,6 +11963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1328354712}
+  - component: {fileID: 1328354713}
   m_Layer: 0
   m_Name: Level1
   m_TagString: Untagged
@@ -11908,6 +11990,27 @@ Transform:
   m_Father: {fileID: 611608853}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1328354713
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328354711}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1330564530
 GameObject:
   m_ObjectHideFlags: 0
@@ -11958,7 +12061,7 @@ MonoBehaviour:
   _editor: {fileID: 1330564533}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -12726,7 +12829,7 @@ MonoBehaviour:
   _editor: {fileID: 1458588133}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.14117648, g: 0.14117648, b: 0.14117648, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -12832,7 +12935,7 @@ Transform:
   m_GameObject: {fileID: 1459434289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 897482658}
@@ -12977,13 +13080,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &1459434293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13250,7 +13353,7 @@ MonoBehaviour:
   _editor: {fileID: 1474493535}
   _width: 2
   _height: 1
-  _color: {r: 0, g: 0, b: 0, a: 0.078431375}
+  _color: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0.078431375}
   _borderColor: {r: 0, g: 0, b: 0, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
@@ -14241,7 +14344,7 @@ Transform:
   m_GameObject: {fileID: 1657914450}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1703924653}
@@ -14386,13 +14489,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &1657914454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15060,7 +15163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5919106134362994298, guid: 5fca3702cdf1a214a94e69dcfa704e17, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.016
+      value: -0.014
       objectReference: {fileID: 0}
     - target: {fileID: 5919106134362994298, guid: 5fca3702cdf1a214a94e69dcfa704e17, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16123,7 +16226,7 @@ Transform:
   m_GameObject: {fileID: 1897738797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 2.04, y: 1.04, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 360238281}
@@ -16268,13 +16371,13 @@ MonoBehaviour:
   _width: 2
   _height: 1
   _color: {r: 1, g: 1, b: 1, a: 0.078431375}
-  _borderColor: {r: 0, g: 0, b: 0, a: 1}
+  _borderColor: {r: 0.6901961, g: 0.6901961, b: 0.6901961, a: 1}
   _radiusTopLeft: 0.3
   _radiusTopRight: 0.3
   _radiusBottomLeft: 0.3
   _radiusBottomRight: 0.3
   _borderInnerRadius: 0
-  _borderOuterRadius: 0
+  _borderOuterRadius: 0.02
 --- !u!114 &1897738801
 MonoBehaviour:
   m_ObjectHideFlags: 0

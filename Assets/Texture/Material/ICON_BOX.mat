@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ICON_TRANS
+  m_Name: ICON_BOX
   m_Shader: {fileID: 4800000, guid: 14ada1814dc603745ad8ec587cc382bf, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: db7ec8e685b984c4fbc5d9738a837f12, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2d94e70b2d2478d46b86771b283143aa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -31,7 +31,7 @@ Material:
     - _BorderColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 0.60784316}
     - _Dimensions: {r: 0.01, g: 0.04, b: 0.002, a: 0}
-    - _EdgeColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+    - _EdgeColor: {r: 0.48235294, g: 0.48235294, b: 0.48235294, a: 1}
     - _IconColor: {r: 1, g: 1, b: 1, a: 1}
     - _Radii: {r: 0.2, g: 0.2, b: 0.2, a: 0.2}
   m_BuildTextureStacks: []

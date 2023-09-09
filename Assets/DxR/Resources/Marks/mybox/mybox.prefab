@@ -183,7 +183,6 @@ GameObject:
   - component: {fileID: 7093488781688581896}
   - component: {fileID: 4402908188380307269}
   - component: {fileID: 2390189331854781836}
-  - component: {fileID: 9221843365236002384}
   - component: {fileID: 5894702074290595930}
   - component: {fileID: 192149698725449066}
   - component: {fileID: 979368816243328782}
@@ -255,24 +254,6 @@ MonoBehaviour:
   _selectSurface: {fileID: 0}
   _movementProvider: {fileID: 0}
   _tiebreakerScore: 0
---- !u!114 &9221843365236002384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6407003572649742356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb5261d7cd290b4eacc0fd20e2db09f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactableView: {fileID: 2390189331854781836}
-  _renderer: {fileID: 4085425864324908049}
-  _normalColor: {r: 0.7830189, g: 0.2696244, b: 0.2696244, a: 1}
-  _hoverColor: {r: 0.25952297, g: 0.63311434, b: 0.6792453, a: 1}
-  _selectColor: {r: 0.4782609, g: 0.6509434, b: 0.20572266, a: 1}
-  _disabledColor: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
 --- !u!114 &5894702074290595930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +325,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4fa117493a73740ac00b99022515bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactableView: {fileID: 2390189331854781836}
+  _renderer: {fileID: 4085425864324908049}
+  _normalColor: {r: 0.64315593, g: 0.79236096, b: 0.9150943, a: 1}
+  _hoverColor: {r: 0.120016046, g: 0.6843625, b: 0.8773585, a: 1}
+  _selectColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
+  _disabledColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &7714864951482466770
 GameObject:
   m_ObjectHideFlags: 0

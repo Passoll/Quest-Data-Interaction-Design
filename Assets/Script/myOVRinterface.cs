@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DxR;
 using DxRextention;
+using Oculus.Interaction;
 using UnityEngine;
 using Oculus.Interaction.Input;
 
@@ -21,17 +22,16 @@ namespace DxRextention
         public SliderManager myslider;
         
         [Header("Control"), Space]
-        
-        public Spatula spat;
         public OVRHM_RotateProxy rot;
         
-        
-        [Space]
+        [Header("select"), Space]
+        public Spatula spat;
         public MultiBox box;
-        private List<GameObject> MultiboxList = new List<GameObject>();
-        
+        public List<RayInteractor> RayInteractors;
         public Transform Boxanchor;
-
+        
+        
+        private List<GameObject> MultiboxList = new List<GameObject>();
 
         public enum Datatype
         {
@@ -43,11 +43,16 @@ namespace DxRextention
 
         private void Awake()
         {
+            
+            if (!spat.anchorpoint)
+            {
+                spat.anchorpoint = Boxanchor;
+            }
             //Trick: set away and use the clone
             box.gameObject.SetActive(true);
             box.transform.position = new Vector3(10000, 10000, 10000);
             
-            SetPassthroughState(true);
+            SetPassthroughState(false);
         }
 
         public void SetPassthroughState(bool state)
@@ -67,8 +72,7 @@ namespace DxRextention
             }
 
         }
-
-
+        
         public void ChangePassthroughState()
         {
             if (!MyManager.isInsightPassthroughEnabled)
@@ -101,19 +105,7 @@ namespace DxRextention
             myslider.InitializeSlider();
             Debug.Log("change the data");
         }
-
-        public void ToggleTransform()
-        {
-            myController.Toggle_transform();
-            myslider.SetSliderState(!myController.Getshowstate());
-        }
-
-        public void ToggleSpatMode()
-        {
-            spat.ToggleVisibility();
-            myslider.resetslider();
-        }
-
+        
         private void ChangeDataViz()
         {
             if (currenttype == Datatype.trajectory) currenttype = Datatype.scatter;
@@ -133,16 +125,74 @@ namespace DxRextention
             }
         }
 
+
+        //-----------------------------------Transform
+        public void ToggleTransform()
+        {
+            myController.Toggle_transform();
+            myslider.SetSliderState(!myController.Getshowstate());
+        }
+        
         public void ToggleRotateProxy()
         {
             rot.ToggleVisibility();
         }
 
-        public void Addmultibox()
+        //-----------------------------------Selection
+        public void EnableMultibox()
         {
+            if (MultiboxList.Count == 0)
+            {
+                ResetSelectMode();
+            }
             GameObject newbox = Instantiate(box.gameObject, Boxanchor.position, Boxanchor.rotation);
             MultiboxList.Add(newbox);
-            //box.gameObject.SetActive(true);
+        }
+        
+        public void EnableSpatMode()
+        {
+            ResetSelectMode();
+            spat.SetVisibility(true);
+        }
+
+        public void EnableRayMode()
+        {
+            ResetSelectMode();
+            foreach (var Ray in RayInteractors)
+            {
+                Ray.gameObject.SetActive(true);
+            }
+        }
+
+        public void ResetMode()
+        {
+            ResetSelectMode();
+        }
+        
+        private void ResetSelectMode()
+        {
+            //ray
+            foreach (var Ray in RayInteractors)
+            {
+                Ray.gameObject.SetActive(false);
+            }
+            //spat
+            if (spat.gameObject.activeSelf)
+            {
+                spat.SetVisibility(false);
+            }
+            //multibox
+            if (MultiboxList.Count > 0)
+            {
+                foreach(var box in MultiboxList)
+                {
+                    Destroy(box);
+                }
+                MultiboxList.Clear();
+            }
+            //slider
+            myslider.resetslider(); //reset all the mark
+
         }
 
 

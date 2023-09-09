@@ -19,13 +19,15 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
     [SerializeField, Optional] private PlayableDirector menu_playable;
     [SerializeField, Optional] private PlayableDirector transform_playable;
     [SerializeField, Optional] private PlayableDirector select_playable;
+
+    private bool overallState;
     
     private void Awake()
     {
-        gameObject.SetActive(true);
         F_Menu.SetActive(false);
         Trans_Menu.SetActive(false);
         Sel_Menu.SetActive(false);
+        overallState = false;
     }
 
     public void SetPlane(CustomHandPlane plane)
@@ -53,7 +55,19 @@ public class OVRHM_MenuButton : MonoBehaviour, IOVRHandMenu
   
     public void ToggleVisibility()
     {
-        F_Menu.SetActive(!F_Menu.activeSelf);
+        overallState = !overallState;
+        if (!overallState)
+        {
+            F_Menu.SetActive(false);
+            Trans_Menu.SetActive(false);
+            Sel_Menu.SetActive(false);
+        }
+        else
+        {
+            F_Menu.SetActive(overallState);
+            F_Menu.transform.localPosition = new Vector3(0,0 ,0);
+            play_menuappear();
+        }
     }
 
     public void SetMenuViz_Transform(bool state)

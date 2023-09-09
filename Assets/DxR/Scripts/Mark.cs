@@ -5,6 +5,7 @@ using SimpleJSON;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using DxRextention;
 using Oculus.Interaction;
 
 namespace DxR
@@ -1095,7 +1096,7 @@ namespace DxR
             
             //<Ayse> ------------------------------
             // set normal color to the original color
-            InteractableDebugVisual visual = transform.GetComponentInChildren<InteractableDebugVisual>();
+            MarkInterface visual = transform.GetComponentInChildren<MarkInterface>();
             if(visual != null)
             {
                 visual.NormalColor = color;

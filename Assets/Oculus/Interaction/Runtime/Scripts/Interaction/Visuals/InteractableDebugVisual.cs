@@ -109,7 +109,6 @@ namespace Oculus.Interaction
             this.AssertField(InteractableView, nameof(InteractableView));
             this.AssertField(_renderer, nameof(_renderer));
             _material = _renderer.material;
-
             UpdateVisual();
             this.EndStart(ref _started);
         }

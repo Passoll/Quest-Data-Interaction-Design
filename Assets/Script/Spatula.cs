@@ -16,4 +16,13 @@ public class Spatula : MonoBehaviour
         }
         gameObject.SetActive(!gameObject.activeSelf);
     }
+
+    public void SetVisibility(bool state)
+    {
+        if (!gameObject.activeSelf)
+        {
+            transform.position = anchorpoint.position;
+        }
+        gameObject.SetActive(state);
+    }
 }

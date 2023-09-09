@@ -45,6 +45,7 @@ public class OVRHandMenuDispacher : MonoBehaviour
     
     private void Update()
     {
+        
         if (OVRInput.IsControllerConnected(OVRInput.Controller.Hands))
         {
             handplane.startPos = (targetHandMiddle.position + targetHandAnchor.position)/2;
@@ -70,8 +71,13 @@ public class OVRHandMenuDispacher : MonoBehaviour
                 hm.SetPlane(handplane);
                 hm.UpdatePosHand();
             }
-           
         }
+
+        if (OVRInput.GetUp(OVRInput.Button.Four))
+        {
+            m_OVRHandMenu[0].ToggleVisibility();
+        }
+        
 
     }
 }

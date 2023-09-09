@@ -89,6 +89,10 @@ namespace DxRextention
             PrepareDxRTransform();
             this.EndStart(ref _started);
             SetEnableTransform(true);
+            
+            //set it first
+            Fixtransform();
+            UpdateDynamic();
 
             Toggle_transform();//close the block at the start
         }
@@ -197,7 +201,6 @@ namespace DxRextention
                 {
                     Fixtransform();
                     UpdateScale();
-
                 }
             }
             else
